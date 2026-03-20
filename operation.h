@@ -7,6 +7,14 @@ struct Student
     char grades;
     int classes;
 };
+struct marks{
+    int aid;
+    int maths;
+    int science;
+    int sst;
+    int hindi;
+    int eng ;
+};
 void display(struct Student s1[],int size);
-
+void infoboard(struct Student s1[],struct marks s2[],int size);
 #endif
