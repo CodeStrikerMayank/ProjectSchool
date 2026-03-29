@@ -139,3 +139,22 @@ void sortersearch(struct Student s1[],struct  marks s2[],int size){
         }
     }
 }
+void deepsearch(struct Student s1[],struct marks s2 ){
+    while(1){
+        system("cls");
+        int lan = sizeof(s1)/sizeof(s1[0]);
+        printf("=================Control protocol for deep search=================");
+        printf(">>>User-->");
+        char* n[100] ;
+        scanf("%s",&n);
+        if (strcmp(n,"id")==0){
+            while(1){int t ;
+                printf("id = ");
+                scanf("%d",&t);
+                if (t>0&&t<lan){
+                    
+                }
+            }
+        }        
+    }
+}
