@@ -17,6 +17,6 @@ struct marks{
 };
 void display(struct Student s1[],int size);
 void infoboard(struct Student s1[],struct marks s2[],int size);
-void wtboard(struct Student s1[],struct marks s2[],int size,int arr[]);
+void wtboard(struct Student s1[],struct marks s2[],int key, int arr[], int len);
 void sortersearch(struct Student s1[],struct marks s2[],int size);
 #endif
