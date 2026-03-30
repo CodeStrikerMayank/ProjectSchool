@@ -5,19 +5,14 @@
 #include "operation.h"
 #include "colour.h"
 
-#include <string.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <windows.h>
-#include "operation.h"
-#include "colour.h"
 
 int main(){    
+    utf();
     struct Student s1[10];
     struct marks s2[10];
 
     // Data Initialization
-    int ids[10] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9}; // Using 0-9 for simpler array access
+    int ids[10] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9}; // Using 0-9 for  array access
     char *names[10] = {
         "Mayank", "Ram", "Sham", "Rahul", "Amit",
         "Ravi", "Karan", "Arjun", "Vikas", "Neeraj"};
