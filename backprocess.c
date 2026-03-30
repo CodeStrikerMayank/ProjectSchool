@@ -139,7 +139,7 @@ void sortersearch(struct Student s1[],struct  marks s2[],int size){
         }
     }
 }
-void deepsearch(struct Student s1[],struct marks s2 ){
+void deepsearch(struct Student s1[],struct marks s2[] ){
     while(1){
         system("cls");
         int lan = sizeof(s1)/sizeof(s1[0]);
@@ -151,8 +151,49 @@ void deepsearch(struct Student s1[],struct marks s2 ){
             while(1){int t ;
                 printf("id = ");
                 scanf("%d",&t);
+                float avg = (s2[t].eng+s2[t].hindi+s2[t].maths+s2[t].science+s2[t].sst)/5;
                 if (t>0&&t<lan){
-                    
+                    printf("================================================\n");
+                    printf("Name :- %s\n",s1[t].name);
+                    printf("Admission number :- %d\n",s1[t].id);
+                    printf("Class :- %d\n",s1[t].classes);
+                    printf("===============Detail Inforamtion===============\n");
+                    printf("| Marks Subject |\n");
+                    printf("English :- %d\n",s2[t].eng);
+                    printf(" Hindi  :- %d\n",s2[t].hindi);
+                    printf("  SST   :- %d\n",s2[t].sst);
+                    printf("Science :- %d\n",s2[t].science);
+                    printf("  Maths :- %d\n",s2[t].maths);
+                    printf(">>>>>> Details analytics <<<<<< \n");
+                    printf("Average performance -> %.2f\n",avg);
+                    int arr[]={s2[t].eng,s2[t].hindi,s2[t].sst,s2[t].science,s2[t].maths};
+                    (avg>33.00)?printf("Status Pass\n"):printf("Status Fail\n");
+                    if (avg<33.00){
+                        if (s2[t].eng<33){
+                            printf("English : %d\n");
+                        }
+                        else if (s2[t].hindi<33){
+                            printf("hindi :%d\n");
+                        }
+                        else if (s2[t].science<33){
+                            printf("science : %d\n");
+                        }
+                        else if (s2[t].maths<33){
+                            printf("Maths : %d\n");
+                        }
+                        else if (s2[t].sst<33){
+                            printf("SST : %d\n");
+                        }
+                    }
+                for (int i =0;i<5;i++){
+                    for (int j =0;j<5;j++){
+                        if(arr[j]<arr[j+1]){
+                            int temp = arr[j];
+                            arr[j]=arr[j+1];
+                            arr[j+1]=temp;
+                        }
+                    }
+                }                                        
                 }
             }
         }        

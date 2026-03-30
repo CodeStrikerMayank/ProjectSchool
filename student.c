@@ -22,7 +22,7 @@ int main(){
         "Mayank", "Ram", "Sham", "Rahul", "Amit",
         "Ravi", "Karan", "Arjun", "Vikas", "Neeraj"};
     int class_no[10] = {10, 10, 9, 12, 11, 10, 9, 12, 11, 10};
-    char grades[10] = {'A', 'B', 'A', 'C', 'B', 'A', 'B', 'C', 'A', 'B'};
+    char grades[10] = {'F', 'B', 'A', 'C', 'B', 'A', 'B', 'C', 'A', 'B'};
     int maths_marks[10]   = {28, 76, 90, 65, 88, 72, 95, 81, 55, 89};
     int science_marks[10] = {29, 81, 88, 70, 95, 68, 98, 79, 60, 91};
     int sst_marks[10]     = {27, 85, 92, 68, 89, 74, 96, 83, 58, 87};
