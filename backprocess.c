@@ -5,7 +5,10 @@
 #include "colour.h"
 #include "operation.h"
 #include <windows.h>
-
+void utf(){
+    SetConsoleOutputCP(65001);
+    SetConsoleCP(65001);
+}
 void display(struct Student s1[], int size){ 
     int st;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
     printf("Id no");
@@ -130,7 +133,7 @@ void sortersearch(struct Student s1[],struct  marks s2[],int size){
             }
             wtboard(s1,s2,key,arr,k);
         }
-        else if (num ==4){printf("coming soon");}
+        else if (num ==4){deepsearch(s1,s2);}
         else if (num == 5){  printf("coming soon");}
         else if (num == 6){break; }
         else {
@@ -142,23 +145,23 @@ void sortersearch(struct Student s1[],struct  marks s2[],int size){
 void deepsearch(struct Student s1[],struct marks s2[] ){
     while(1){
         system("cls");
-        int lan = sizeof(s1)/sizeof(s1[0]);
-        printf("=================Control protocol for deep search=================");
+        int lan = 10; // Arrays decay into pointers; sizeof() calculation replaced with the fixed array size.
+        printf("=================Control protocol for deep search=================\n");
         printf(">>>User-->");
-        char* n[100] ;
-        scanf("%s",&n);
+        char n[100];
+        scanf("%s", n);
         if (strcmp(n,"id")==0){
             while(1){int t ;
                 printf("id = ");
                 scanf("%d",&t);
-                float avg = (s2[t].eng+s2[t].hindi+s2[t].maths+s2[t].science+s2[t].sst)/5;
-                if (t>0&&t<lan){
+                if (t>=0 && t<lan){ // Boundary check must happen BEFORE accessing s2[t]
+                    float avg = (float)(s2[t].eng+s2[t].hindi+s2[t].maths+s2[t].science+s2[t].sst)/5.0;
                     printf("================================================\n");
                     printf("Name :- %s\n",s1[t].name);
                     printf("Admission number :- %d\n",s1[t].id);
                     printf("Class :- %d\n",s1[t].classes);
                     printf("===============Detail Inforamtion===============\n");
-                    printf("| Marks Subject |\n");
+                    printf("| Marks :- Subject |\n");
                     printf("English :- %d\n",s2[t].eng);
                     printf(" Hindi  :- %d\n",s2[t].hindi);
                     printf("  SST   :- %d\n",s2[t].sst);
@@ -167,35 +170,140 @@ void deepsearch(struct Student s1[],struct marks s2[] ){
                     printf(">>>>>> Details analytics <<<<<< \n");
                     printf("Average performance -> %.2f\n",avg);
                     int arr[]={s2[t].eng,s2[t].hindi,s2[t].sst,s2[t].science,s2[t].maths};
+                    char *subjects[5] = {"English", "Hindi", "SST", "Science", "Maths"};
                     (avg>33.00)?printf("Status Pass\n"):printf("Status Fail\n");
                     if (avg<33.00){
                         if (s2[t].eng<33){
-                            printf("English : %d\n");
+                            printf("English : %d\n",s2[t].eng);
                         }
                         else if (s2[t].hindi<33){
-                            printf("hindi :%d\n");
+                            printf("hindi :%d\n",s2[t].hindi);
                         }
                         else if (s2[t].science<33){
-                            printf("science : %d\n");
+                            printf("science : %d\n",s2[t].science);
                         }
                         else if (s2[t].maths<33){
-                            printf("Maths : %d\n");
+                            printf("Maths : %d\n",s2[t].maths);
                         }
                         else if (s2[t].sst<33){
-                            printf("SST : %d\n");
+                            printf("SST : %d\n",s2[t].sst);
                         }
                     }
                 for (int i =0;i<5;i++){
-                    for (int j =0;j<5;j++){
+                    for (int j =0;j<4;j++){ // Prevent out of bounds index evaluation (arr[j+1])
                         if(arr[j]<arr[j+1]){
                             int temp = arr[j];
                             arr[j]=arr[j+1];
                             arr[j+1]=temp;
+                            char *tempsub = subjects[j];
+                            subjects[j]=subjects[j+1];
+                            subjects[j+1]=tempsub;
                         }
-                    }
-                }                                        
+                    } 
                 }
+
+                printf("\n%s||A -->high score ||%s ", green, reset);
+                printf("%s||B-->Middle score ||%s ", blue, reset);
+                printf("%s||C-->Low score||\n%s", red, reset);
+                printf("Subject-->Score\n");
+                for (int i =0;i<5;i++){
+                    if (i<2){
+                    printf("%s %s -->  %d %s\n",green,subjects[i], arr[i],reset);
+                }
+                else if (i>2){
+                    printf("%s %s -->  %d %s\n",blue ,subjects[i], arr[i],reset);
+                }
+                else {
+                    printf("%s %s -->  %d %s \n",red, subjects[i], arr[i],reset);
+                }
+                }
+                printf("Enter key to return"); _getch();
             }
         }        
     }
-}
+    else if(strcmp(n,"name")==0||strcmp(n,"class")==0){
+        if (strcmp(n,"name")==0){
+    char search_name[100];
+    printf("Enter name: ");
+    scanf("%s", search_name);
+
+    int matches[10];  
+    int count = 0;
+
+    for (int i = 0; i < lan; i++){
+        if (strcmp(s1[i].name, search_name) == 0){
+            matches[count++] = i;
+        }
+    }
+    if (count == 0){
+        printf("No student found ❌\n");
+        _getch();
+        return; }
+    printf("\nFound %d students:\n", count);
+    for (int i = 0; i < count; i++){
+        int idx = matches[i];
+        printf("[%d] Name: %s | ID: %d | Class: %d\n",i, s1[idx].name, s1[idx].id, s1[idx].classes);
+    }
+    int choice;
+    printf("Select index (or -1 to cancel): ");
+    scanf("%d", &choice);
+
+    if (choice == -1) return;
+
+    if (choice >= 0 && choice < count){
+        int t = matches[choice];
+        printf("\nSelected Student:\n");
+        printf("Name :- %s\n", s1[t].name);
+        printf("ID :- %d\n", s1[t].id);
+        printf("Class :- %d\n", s1[t].classes);
+
+        _getch();
+    } else {
+        printf("Invalid choice ❌\n");
+        _getch();
+    }
+}else if (strcmp(n,"class")==0){
+    int cls;
+    printf("Enter class: ");
+    scanf("%d", &cls);
+
+    int matches[10];
+    int count = 0;
+
+    for (int i = 0; i < lan; i++){
+        if (s1[i].classes == cls){
+            matches[count++] = i;
+        }
+    }
+
+    if (count == 0){
+        printf("No students found\n");
+        _getch();
+        return;
+    }
+
+    printf("\nFound %d students:\n", count);
+    for (int i = 0; i < count; i++){
+        int idx = matches[i];
+        printf("[%d] Name: %s | ID: %d\n", i, s1[idx].name, s1[idx].id);
+    }
+
+    int choice;
+    printf("Select index: ");
+    scanf("%d", &choice);
+
+    if (choice >= 0 && choice < count){
+        int t = matches[choice];
+
+        printf("\nSelected Student:\n");
+        printf("Name :- %s\n", s1[t].name);
+        printf("ID :- %d\n", s1[t].id);
+        printf("Class :- %d\n", s1[t].classes);
+        _getch();
+    }
+    else{
+        printf("Invalid choice\n");
+        _getch();
+    }
+} }
+}}
