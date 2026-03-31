@@ -15,6 +15,12 @@ struct marks{
     int hindi;
     int eng ;
 };
+void welcome();
+void loading();
+void searching();
+void time();
+void hello();
+void terminate();
 void utf();
 void display(struct Student s1[],int size);
 void infoboard(struct Student s1[],struct marks s2[],int size);

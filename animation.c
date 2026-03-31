@@ -19,7 +19,9 @@ void welcome(){
             printf("%s%s>>>%s%s", bold, green, hello[j], reset);
             Sleep(500);
         }
+    }
 }
+
 void terminate(){
     system("cls");
     char *hel[] = {"Terminating.","Terminating..","Terminating...","Bye"};

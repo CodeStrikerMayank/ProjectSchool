@@ -8,6 +8,7 @@
 
 int main(){    
     utf();
+    welcome();
     struct Student s1[10];
     struct marks s2[10];
 
@@ -61,15 +62,19 @@ int main(){
 
         switch (choice) {
             case 1:
+                loading();
                 infoboard(s1, s2, 10);
                 break;
             case 2:
+                loading();
                 display(s1, 10);
                 break;
             case 3:
+                loading();
                 sortersearch(s1, s2, 10);
                 break;
             case 4:
+                terminate();
                 printf(green "Exiting program. Goodbye!\n" reset);
                 return 0;
             default:

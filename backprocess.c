@@ -9,6 +9,71 @@ void utf(){
     SetConsoleOutputCP(65001);
     SetConsoleCP(65001);
 }
+
+void loading()
+{
+    system("cls");
+    char *hello[] = {"Loading.", "Loading..", "Loading...", "Loading...."};
+    for (int i = 0; i < 3; i++)
+    {
+        for (int j = 0; j < 4; j++)
+        {
+            system("cls");
+            printf("%s%s>>>%s%s", bold, green, hello[j], reset);
+            Sleep(350);
+        }
+    }
+}
+
+void searching(){
+    char *hello[]={">",">>",">>>",">>>>"};
+    char *toke[] ={"Searching.","Matching Records."};
+    for (int i =0;i<2;i++){
+        for (int j=0;j<4;j++){
+            //system("cls");
+            printf("\r%s %s[%-4s]%s%s",bold,yellow,hello[j],toke[i],reset);
+            Sleep(400);
+        }
+    }
+}
+
+void time()
+{
+    system("cls");
+    char *rotate[] = {
+        "→",
+        "↘",
+        "↓",
+        "↙",
+        "←",
+        "↖",
+        "↑",
+        "↗"};
+    for (int i = 0; i < 6; i++)
+    {
+        for (int j = 0; j < 8; j++)
+        {
+            system("cls");
+            printf(" \n\n\n   %s%s>>> Fetching Data [%s]%s   \n\n\n ", bold, green, rotate[j], reset);
+            Sleep(350);
+        }
+    }
+}
+
+void hello()
+{
+    char *tok[] = {".", "..", "...", "...."};
+    system("cls");
+    for (int i = 0; i < 3; i++)
+    {
+        for (int j = 0; j < 4; j++)
+        {
+            system("cls");
+            printf("%s>>>%s Returning%s %s", bold, green, tok[j], reset);
+            Sleep(300);
+        }
+    }
+}
 void display(struct Student s1[], int size){ 
     int st;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
     printf("Id no");
@@ -18,6 +83,7 @@ void display(struct Student s1[], int size){
         Sleep(2000);
         return;
     }
+    time();
     system("cls");
     printf(green);
     printf("\n+------+------+--------+");
@@ -29,6 +95,7 @@ void display(struct Student s1[], int size){
     printf(reset);
     printf("\nPress any key to continue...");
     _getch();
+    hello();
 }
 
 void infoboard(struct Student s1[],struct marks s2[],int size){
@@ -40,6 +107,7 @@ void infoboard(struct Student s1[],struct marks s2[],int size){
         Sleep(2000);
         return;
     }
+    time();
     system("cls");
     printf(green);
 
@@ -58,6 +126,7 @@ void infoboard(struct Student s1[],struct marks s2[],int size){
     printf(reset);
     printf("\nPress any key to continue...");
     _getch();
+    hello(); // Animation for returning after displaying details
 }
 
 void wtboard(struct Student s1[],struct marks s2[],int key,int arr[], int len){
@@ -97,6 +166,7 @@ void sortersearch(struct Student s1[],struct  marks s2[],int size){
         printf(reset);
         printf("Enter your choice --> ");
         scanf("%d",&num);
+        
         if (num==1){
             int key = 0;
             int k = 0;
@@ -248,7 +318,7 @@ void deepsearch(struct Student s1[],struct marks s2[] ){
     printf("Select index (or -1 to cancel): ");
     scanf("%d", &choice);
 
-    if (choice == -1) return;
+    if (choice == -1) hello();return;
 
     if (choice >= 0 && choice < count){
         int t = matches[choice];
@@ -258,15 +328,17 @@ void deepsearch(struct Student s1[],struct marks s2[] ){
         printf("Class :- %d\n", s1[t].classes);
 
         _getch();
+        hello();
     } else {
         printf("Invalid choice ❌\n");
         _getch();
+        hello();
     }
 }else if (strcmp(n,"class")==0){
     int cls;
     printf("Enter class: ");
     scanf("%d", &cls);
-
+    searching();
     int matches[10];
     int count = 0;
 
@@ -279,6 +351,7 @@ void deepsearch(struct Student s1[],struct marks s2[] ){
     if (count == 0){
         printf("No students found\n");
         _getch();
+        hello();
         return;
     }
 
@@ -300,10 +373,12 @@ void deepsearch(struct Student s1[],struct marks s2[] ){
         printf("ID :- %d\n", s1[t].id);
         printf("Class :- %d\n", s1[t].classes);
         _getch();
+        hello();
     }
     else{
         printf("Invalid choice\n");
         _getch();
+        hello();
     }
 } }
 }}
