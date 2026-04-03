@@ -11,15 +11,26 @@ void utf()
     SetConsoleCP(65001);
 }
 
+int find_student_index_by_id(struct Student s1[], int size, int id) {
+    for (int i = 0; i < size; i++) {
+        if (s1[i].id == id) {
+            return i; 
+        }
+    }
+    return -1; 
+}
+
 void display(struct Student s1[], int size)
 {
     system("cls");
-    int st;
-    printf("Id no");
-    scanf("%d", &st);
-    if (st < 0 || st >= size)
+    int target_id;
+    printf("Enter Student ID to display details: ");
+    scanf("%d", &target_id);
+
+    int index = find_student_index_by_id(s1, size, target_id);
+    if (index == -1)
     {
-        printf(red "Error: Invalid ID number. Please enter an ID within the valid range.\n" reset);
+        printf(red "\nError: Student with ID %d not found.\n" reset, target_id);
         Sleep(2000);
         return;
     }
@@ -27,10 +38,10 @@ void display(struct Student s1[], int size)
     system("cls");
     printf(green);
     printf("\n+------+------+--------+");
-    printf("\nName :- %s\n", s1[st].name);
-    printf("Class :- %d\n", s1[st].classes);
-    printf("Rollnumber :- %d\n", s1[st].id);
-    printf("Grades :- %c\n", s1[st].grades);
+    printf("\nName :- %s\n", s1[index].name);
+    printf("Class :- %d\n", s1[index].classes);
+    printf("Rollnumber :- %d\n", s1[index].id);
+    printf("Grades :- %c\n", s1[index].grades);
     printf("+------+------+--------+");
     printf(reset);
     printf("\nPress any key to continue...");
@@ -40,12 +51,14 @@ void display(struct Student s1[], int size)
 
 void infoboard(struct Student s1[], struct marks s2[], int size)
 {   system("cls");
-    int st;
-    printf("Id no");
-    scanf("%d", &st);
-    if (st < 0 || st >= size)
+    int target_id;
+    printf("Enter Student ID to display report card: ");
+    scanf("%d", &target_id);
+
+    int index = find_student_index_by_id(s1, size, target_id);
+    if (index == -1)
     {
-        printf(red "Error: Invalid ID number. Please enter an ID within the valid range.\n" reset);
+        printf(red "\nError: Student with ID %d not found.\n" reset, target_id);
         Sleep(2000);
         return;
     }
@@ -57,13 +70,13 @@ void infoboard(struct Student s1[], struct marks s2[], int size)
     printf("|               STUDENT REPORT CARD               |\n");
     printf("+-------------------------+-----------------------+\n");
 
-    printf("| Name: %-17s | Roll No: %-12d |\n", s1[st].name, s1[st].id);
+    printf("| Name: %-17s | Roll No: %-12d |\n", s1[index].name, s1[index].id);
 
     printf("+---------+---------+---------+---------+---------+\n");
     printf("|  Maths  | Science | English |  Hindi  |   SST   |\n");
     printf("+---------+---------+---------+---------+---------+\n");
     printf("|   %3d   |   %3d   |   %3d   |   %3d   |   %3d   |\n",
-            s2[st].maths, s2[st].science, s2[st].eng, s2[st].hindi, s2[st].sst);
+            s2[index].maths, s2[index].science, s2[index].eng, s2[index].hindi, s2[index].sst);
     printf("+---------+---------+---------+---------+---------+\n\n");
     printf(reset);
     printf("\nPress any key to continue...");
@@ -182,7 +195,7 @@ void deepsearch(struct Student s1[], struct marks s2[], int size)
     while (1)
     {
         system("cls");
-        int lan = size; // Use the passed 'size' parameter
+        int lan = size; 
         printf("=================Control protocol for deep search=================\n");
         printf(">>>User-->");
         char n[100];
@@ -191,11 +204,19 @@ void deepsearch(struct Student s1[], struct marks s2[], int size)
         {
             while (1)
             {
-                int t;
+                int target_id;
                 printf("id = ");
-                scanf("%d", &t);
-                if (t >= 0 && t < lan)
-                { // Boundary check must happen BEFORE accessing s2[t]
+                if (scanf("%d", &target_id) != 1) {
+                    while(getchar() != '\n');
+                    printf(red "Invalid input. Please enter a numeric ID.\n" reset);
+                    _getch();
+                    continue;
+                }
+
+                int t = find_student_index_by_id(s1, size, target_id);
+
+                if (t != -1)
+                {
                     float avg = (float)(s2[t].eng + s2[t].hindi + s2[t].maths + s2[t].science + s2[t].sst) / 5.0;
                     printf("================================================\n");
                     printf("Name :- %s\n", s1[t].name);
@@ -237,9 +258,9 @@ void deepsearch(struct Student s1[], struct marks s2[], int size)
                         }
                     }
                     for (int i = 0; i < 4; i++)
-                    { // Corrected outer loop for bubble sort (5 elements, 4 passes)
+                    { 
                         for (int j = 0; j < 4 - i; j++)
-                        { // Corrected inner loop for bubble sort
+                        { 
                             if (arr[j] < arr[j + 1])
                             {
                                 int temp = arr[j];
@@ -273,6 +294,12 @@ void deepsearch(struct Student s1[], struct marks s2[], int size)
                     }
                     printf("Enter key to return");
                     _getch();
+                    break;
+                } else {
+                    printf(red "Student with ID %d not found.\n" reset, target_id);
+                    printf("Press any key to try again, or 'q' to return to the previous menu.\n");
+                    char c = _getch();
+                    if (c == 'q' || c == 'Q') break;
                 }
             }
         }
@@ -284,7 +311,6 @@ void deepsearch(struct Student s1[], struct marks s2[], int size)
                 printf("Enter name: ");
                 scanf("%s", search_name);
 
-                // Assuming max 10 students, adjust if 'size' can be larger than 10
                 int matches[size];
                 int count = 0;
 
@@ -341,7 +367,6 @@ void deepsearch(struct Student s1[], struct marks s2[], int size)
                 printf("Enter class: ");
                 scanf("%d", &cls);
                 searching();
-                // Assuming max 10 students, adjust if 'size' can be larger than 10
                 int matches[size];
                 int count = 0;
 
@@ -390,5 +415,5 @@ void deepsearch(struct Student s1[], struct marks s2[], int size)
                     hello();
                 }
             }
-        } // Closing brace for else if (strcmp(n,"name")==0||strcmp(n,"class")==0)
-    } }// Closing brace for while(1)
+        } 
+    } }

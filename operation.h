@@ -22,15 +22,17 @@ void searching();
 void time();
 void hello();
 void terminate();
-void readcontext(struct Student s1[],struct marks s2[]);
+void readcontext(struct Student s1[], struct marks s2[]);
+void addon();
 void utf();
-void mutate(struct Student s1[],struct marks s2[]);
-void extract(struct Student s1[],struct marks s2[]);
-void update(struct Student s1[],struct marks s2[]);
+void view(struct Student s1[], struct marks s2[], int size);
+void mutate(struct Student s1[], struct marks s2[]);
+void extract(struct Student s1[], struct marks s2[]);
+void update(struct Student s1[], struct marks s2[], int size);
 void display(struct Student s1[], int size);
 void infoboard(struct Student s1[], struct marks s2[], int size);
 void wtboard(struct Student s1[], struct marks s2[], int key, int arr[], int len);
 void sortersearch(struct Student s1[], struct marks s2[], int size);
-void deepsearch(struct Student s1[], struct marks s2[], int size); // Added missing 'size' parameter
+void deepsearch(struct Student s1[], struct marks s2[], int size);
 
 #endif

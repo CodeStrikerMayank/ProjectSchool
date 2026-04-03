@@ -35,7 +35,7 @@ void sname(char *name)
         {
             for (int i = 0; name[i] != '\0'; i++)
             {
-                if (!isalpha(name[i]) && !isspace(name[i])) 
+                if (!isalpha(name[i]) && !isspace(name[i]))
                 {
                     valid = 0;
                     break;
@@ -155,18 +155,25 @@ void seng(int *eng)
         }
     }
 }
-//? doubt on how it works need to  learn 
-void idgeneration(int *id) {
-    FILE * fp = fopen("data.csv","r");
-    if (fp ==NULL ){
-        *id = 1;fclose(fp);return ;
+//? doubt on how it works need to  learn
+void idgeneration(int *id)
+{
+    FILE *fp = fopen("data.csv", "r");
+    if (fp == NULL)
+    {
+        *id = 1;
+        return;
     }
-    char c ;
-    int len=0;
-    while ((c=fgetc(fp))!=EOF){
-        if (c=='\n'){len++;}
+    char c;
+    int len = 0;
+    while ((c = fgetc(fp)) != EOF)
+    {
+        if (c == '\n')
+        {
+            len++;
+        }
     }
-    *id = len+1;
+    *id = len + 1;
     fclose(fp);
 }
 void autograding(float *avg, char *grade)
@@ -189,17 +196,16 @@ void autograding(float *avg, char *grade)
     }
 }
 // TODO to add autograding system and marks checker
-void mte()
+void addon()
 {
-    FILE *fp;
-    fp = fopen("data.csv", "a");
-    if (fp == NULL)
-    {
-        printf(bold red "Error: Could not open data.csv for writing!\n" reset);
-        return; // Corrected return type for void function
-    }
     while (1)
     {
+        FILE *fp = fopen("data.csv", "a");
+        if (fp == NULL)
+        {
+            printf(bold red "Error: Could not open data.csv for writing!\n" reset);
+            return;
+        }
         char name[100];
         int sst, sci, eng, hindi, math, id, class;
         char grade; //* automating the id so it should be unique
@@ -222,10 +228,10 @@ void mte()
 
         printf("\nCalculated Average: %.2f | Grade: %c\n", avg, grade);
 
-        printf(reset); 
+        printf(reset);
         fprintf(fp, "%d,%s,%d,%c,%d,%d,%d,%d,%d\n", id, name, class, grade, sst, sci, math, hindi, eng);
         fclose(fp);
-        printf("Data added success\n"); 
+        printf("Data added success\n");
         char d;
         printf("Press Q or q to quit ");
         scanf(" %c", &d);
@@ -235,11 +241,152 @@ void mte()
         }
         cleanbuff();
     }
-    fclose(fp);
     printf("Saved\n");
 }
-int main()
+void extract(struct Student s1[], struct marks s2[])
 {
-    mte();
+    FILE *fp = fopen("data.csv", "r");
+    if (fp == NULL)
+    {
+        printf(red "NO DATA FOUND. Please add students using the enrollment portal.\n" reset);
+        return; // Removed return 0; as function returns void
+    }
+    char c;
+    int size = 0;
+    while ((c = fgetc(fp)) != EOF)
+    {
+        if (c == '\n')
+        {
+            size++;
+        }
+    }
+
+    rewind(fp); // Reset file pointer to the beginning
+    int i = 0;
+    while (i < size && fscanf(fp, "%d,%99[^,],%d,%c,%d,%d,%d,%d,%d\n",
+                            &s1[i].id,
+                            s1[i].name,
+                                &s1[i].classes,
+                                &s1[i].grades,
+                                &s2[i].sst,
+                                &s2[i].science,
+                                &s2[i].maths,
+                                &s2[i].hindi,
+                                &s2[i].eng) == 9) // Expecting 9 successful conversions
+    {
+        s2[i].aid = s1[i].id;
+        i++;
+    }
+    fclose(fp); // Close the file after reading
+}
+void view(struct Student s1[],struct marks s2[],int size){
+    for (int i=0;i<size;i++){
+        printf("%d %s %d %c %d %d %d %d %d\n ",
+                                s1[i].id,
+                                s1[i].name,
+                                s1[i].classes, // Corrected indentation
+                                s1[i].grades,  // Corrected indentation
+                                s2[i].sst,     // Corrected indentation
+                                s2[i].science, // Corrected indentation
+                                s2[i].maths,   // Corrected indentation
+                                s2[i].hindi,   // Corrected indentation
+                                s2[i].eng);    // Corrected indentation
+    }
+}
+/*int main()
+{    FILE *fp = fopen("data.csv", "r");
+    if (fp == NULL)
+    {
+        printf(red "NO DATA FOUND. Please add students using the enrollment portal.\n" reset);
+        return 0 ;
+    }
+    char c;
+    int size = 0;
+    while ((c = fgetc(fp)) != EOF)
+    {
+        if (c == '\n')
+        {
+            size++;
+        }
+    }
+    fclose(fp);
+    struct Student s1[size];
+    struct marks s2[size];
+    extract(s1, s2);
+    view(s1,s2,size);
+    printf("%d %s %c",s1[4].id,s1[4].name,s1[4].grades);
     return 0;
+}
+// Removed the main function from extraction.c to resolve "multiple definition of 'main'" error.
+// The primary main function is in student.c.
+// int main()
+// {    FILE *fp = fopen("data.csv", "r");
+//     if (fp == NULL)
+//     {
+//         printf(red "NO DATA FOUND. Please add students using the enrollment portal.\n" reset);
+//         return 0 ;
+//     }
+//     char c;
+//     int size = 0;
+//     while ((c = fgetc(fp)) != EOF)
+//     {
+//         if (c == '\n')
+//         {
+//             size++;
+//         }
+//     }
+//     fclose(fp);
+//     struct Student s1[size];
+//     struct marks s2[size];
+//     extract(s1, s2);
+//     view(s1,s2,size);
+//     printf("%d %s %c",s1[4].id,s1[4].name,s1[4].grades);
+//     return 0;
+// }*/
+void update(struct Student s1[], struct marks s2[], int size) {
+    int target_id, found = 0;
+    printf("\nEnter the Student ID to update: ");
+    scanf("%d", &target_id);
+    cleanbuff();
+
+    for (int i = 0; i < size; i++) {
+        if (s1[i].id == target_id) {
+            found = 1;
+            printf("Student Found: %s. Enter new details:\n", s1[i].name);
+            
+            sname(s1[i].name);
+            classes(&s1[i].classes);
+            
+            printf("Enter new Marks (SST, Science, Math, Hindi, English):\n");
+            social(&s2[i].sst);
+            science(&s2[i].science);
+            smath(&s2[i].maths);
+            shindi(&s2[i].hindi);
+            seng(&s2[i].eng);
+            float avg = (s2[i].sst + s2[i].science + s2[i].maths + s2[i].hindi + s2[i].eng) / 5.0;
+            autograding(&avg, &s1[i].grades);
+            
+            break; 
+    }
+
+    if (!found) {
+        printf(bold red "Error: Student ID %d not found!\n" reset, target_id);
+        return;
+    }
+    FILE *fp = fopen("data.csv", "w");
+    if (fp == NULL) {
+        printf("Error saving updates!\n");
+        return;
+    }
+
+    for (int i = 0; i < size; i++) {
+        fprintf(fp, "%d,%s,%d,%c,%d,%d,%d,%d,%d\n", 
+                s1[i].id, s1[i].name, s1[i].classes, s1[i].grades,
+                s2[i].sst, s2[i].science, s2[i].maths, s2[i].hindi, s2[i].eng);
+    }
+
+    fclose(fp);
+    printf(green "Student record updated and saved successfully!\n" reset);
+}
+
 }
