@@ -3,7 +3,7 @@
 #include <windows.h>
 #include "operation.h"
 #include <string.h>
-#include <ctype.h> // For isalpha and isspace
+#include <ctype.h> 
 #include "colour.h"
 //? Here we can see
 
@@ -35,7 +35,7 @@ void sname(char *name)
         {
             for (int i = 0; name[i] != '\0'; i++)
             {
-                if (!isalpha(name[i]) && !isspace(name[i]))
+                if (!isaplha(name[i]) && !isspace(name[i]))
                 {
                     valid = 0;
                     break;
@@ -284,65 +284,16 @@ void view(struct Student s1[],struct marks s2[],int size){
         printf("%d %s %d %c %d %d %d %d %d\n ",
                                 s1[i].id,
                                 s1[i].name,
-                                s1[i].classes, // Corrected indentation
-                                s1[i].grades,  // Corrected indentation
-                                s2[i].sst,     // Corrected indentation
-                                s2[i].science, // Corrected indentation
-                                s2[i].maths,   // Corrected indentation
-                                s2[i].hindi,   // Corrected indentation
-                                s2[i].eng);    // Corrected indentation
+                                s1[i].classes, 
+                                s1[i].grades,  
+                                s2[i].sst,     
+                                s2[i].science,
+                                s2[i].maths,   
+                                s2[i].hindi,   
+                                s2[i].eng);   
     }
 }
-/*int main()
-{    FILE *fp = fopen("data.csv", "r");
-    if (fp == NULL)
-    {
-        printf(red "NO DATA FOUND. Please add students using the enrollment portal.\n" reset);
-        return 0 ;
-    }
-    char c;
-    int size = 0;
-    while ((c = fgetc(fp)) != EOF)
-    {
-        if (c == '\n')
-        {
-            size++;
-        }
-    }
-    fclose(fp);
-    struct Student s1[size];
-    struct marks s2[size];
-    extract(s1, s2);
-    view(s1,s2,size);
-    printf("%d %s %c",s1[4].id,s1[4].name,s1[4].grades);
-    return 0;
-}
-// Removed the main function from extraction.c to resolve "multiple definition of 'main'" error.
-// The primary main function is in student.c.
-// int main()
-// {    FILE *fp = fopen("data.csv", "r");
-//     if (fp == NULL)
-//     {
-//         printf(red "NO DATA FOUND. Please add students using the enrollment portal.\n" reset);
-//         return 0 ;
-//     }
-//     char c;
-//     int size = 0;
-//     while ((c = fgetc(fp)) != EOF)
-//     {
-//         if (c == '\n')
-//         {
-//             size++;
-//         }
-//     }
-//     fclose(fp);
-//     struct Student s1[size];
-//     struct marks s2[size];
-//     extract(s1, s2);
-//     view(s1,s2,size);
-//     printf("%d %s %c",s1[4].id,s1[4].name,s1[4].grades);
-//     return 0;
-// }*/
+
 void update(struct Student s1[], struct marks s2[], int size) {
     int target_id, found = 0;
     printf("\nEnter the Student ID to update: ");

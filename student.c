@@ -71,10 +71,9 @@ int main()
 
         if (scanf("%d", &choice) != 1)
         {
-            // Clear invalid input
             while (getchar() != '\n')
                 ;
-            choice = 0; // Set to a default invalid choice
+            choice = 0;
         }
 
         switch (choice)

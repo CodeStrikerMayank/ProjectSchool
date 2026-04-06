@@ -81,7 +81,7 @@ void infoboard(struct Student s1[], struct marks s2[], int size)
     printf(reset);
     printf("\nPress any key to continue...");
     _getch();
-    hello(); // Animation for returning after displaying details
+    hello(); 
 }
 
 void wtboard(struct Student s1[], struct marks s2[], int key, int arr[], int len)
