@@ -5,7 +5,15 @@
 #include "operation.h"
 #include <conio.h>
 #include "colour.h"
-
+void backup(){
+    if (CopyFile("data.csv","databackp.csv",FALSE)){
+        printf("Data Backup complete ✅");
+        Sleep(1000);
+    }
+    else{
+        printf("%sError data not found. Code: %lu%s",red,GetLastError(),reset);
+    }
+}
 int main()
 {
     utf();
@@ -23,6 +31,10 @@ int main()
             _getch();
             addon();
             continue; 
+        }
+        else{
+            backup();
+            printf("Data Backup");
         }
 
         char c;

@@ -3,7 +3,7 @@
 #include <windows.h>
 #include "operation.h"
 #include <string.h>
-#include <ctype.h> 
+#include <ctype.h>
 #include "colour.h"
 //? Here we can see
 
@@ -35,7 +35,7 @@ void sname(char *name)
         {
             for (int i = 0; name[i] != '\0'; i++)
             {
-                if (!isaplha(name[i]) && !isspace(name[i]))
+                if (!isalpha(name[i]) && !isspace(name[i]))
                 {
                     valid = 0;
                     break;
@@ -264,50 +264,55 @@ void extract(struct Student s1[], struct marks s2[])
     rewind(fp); // Reset file pointer to the beginning
     int i = 0;
     while (i < size && fscanf(fp, "%d,%99[^,],%d,%c,%d,%d,%d,%d,%d\n",
-                            &s1[i].id,
-                            s1[i].name,
-                                &s1[i].classes,
-                                &s1[i].grades,
-                                &s2[i].sst,
-                                &s2[i].science,
-                                &s2[i].maths,
-                                &s2[i].hindi,
-                                &s2[i].eng) == 9) // Expecting 9 successful conversions
+                              &s1[i].id,
+                              s1[i].name,
+                              &s1[i].classes,
+                              &s1[i].grades,
+                              &s2[i].sst,
+                              &s2[i].science,
+                              &s2[i].maths,
+                              &s2[i].hindi,
+                              &s2[i].eng) == 9) // Expecting 9 successful conversions
     {
         s2[i].aid = s1[i].id;
         i++;
     }
     fclose(fp); // Close the file after reading
 }
-void view(struct Student s1[],struct marks s2[],int size){
-    for (int i=0;i<size;i++){
+void view(struct Student s1[], struct marks s2[], int size)
+{
+    for (int i = 0; i < size; i++)
+    {
         printf("%d %s %d %c %d %d %d %d %d\n ",
-                                s1[i].id,
-                                s1[i].name,
-                                s1[i].classes, 
-                                s1[i].grades,  
-                                s2[i].sst,     
-                                s2[i].science,
-                                s2[i].maths,   
-                                s2[i].hindi,   
-                                s2[i].eng);   
+               s1[i].id,
+               s1[i].name,
+               s1[i].classes,
+               s1[i].grades,
+               s2[i].sst,
+               s2[i].science,
+               s2[i].maths,
+               s2[i].hindi,
+               s2[i].eng);
     }
 }
 
-void update(struct Student s1[], struct marks s2[], int size) {
+void update(struct Student s1[], struct marks s2[], int size)
+{
     int target_id, found = 0;
     printf("\nEnter the Student ID to update: ");
     scanf("%d", &target_id);
     cleanbuff();
 
-    for (int i = 0; i < size; i++) {
-        if (s1[i].id == target_id) {
+    for (int i = 0; i < size; i++)
+    {
+        if (s1[i].id == target_id)
+        {
             found = 1;
             printf("Student Found: %s. Enter new details:\n", s1[i].name);
-            
+
             sname(s1[i].name);
             classes(&s1[i].classes);
-            
+
             printf("Enter new Marks (SST, Science, Math, Hindi, English):\n");
             social(&s2[i].sst);
             science(&s2[i].science);
@@ -316,28 +321,30 @@ void update(struct Student s1[], struct marks s2[], int size) {
             seng(&s2[i].eng);
             float avg = (s2[i].sst + s2[i].science + s2[i].maths + s2[i].hindi + s2[i].eng) / 5.0;
             autograding(&avg, &s1[i].grades);
-            
-            break; 
+
+            break;
+        }
     }
 
-    if (!found) {
+    if (!found)
+    {
         printf(bold red "Error: Student ID %d not found!\n" reset, target_id);
         return;
     }
     FILE *fp = fopen("data.csv", "w");
-    if (fp == NULL) {
+    if (fp == NULL)
+    {
         printf("Error saving updates!\n");
         return;
     }
 
-    for (int i = 0; i < size; i++) {
-        fprintf(fp, "%d,%s,%d,%c,%d,%d,%d,%d,%d\n", 
+    for (int i = 0; i < size; i++)
+    {
+        fprintf(fp, "%d,%s,%d,%c,%d,%d,%d,%d,%d\n",
                 s1[i].id, s1[i].name, s1[i].classes, s1[i].grades,
                 s2[i].sst, s2[i].science, s2[i].maths, s2[i].hindi, s2[i].eng);
     }
 
     fclose(fp);
     printf(green "Student record updated and saved successfully!\n" reset);
-}
-
 }
